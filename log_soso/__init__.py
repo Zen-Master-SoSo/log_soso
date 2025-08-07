@@ -55,15 +55,28 @@ def log_stderr(level = logging.ERROR):
 	"""
 	Redirect STDOUT to log
 	"""
-	sys.stderr = StreamToLogger(level)
+	sys.stderr = StderrLogger()
+
+class StdoutLogger(logging.StreamHandler):
+
+	def emit(self, record):
+		msg = self.format(record)
+		logging.getLogger().info(msg)
 
 
-class StreamToLogger:
+class StderrLogger(logging.StreamHandler):
+
+	def emit(self, record):
+		msg = self.format(record)
+		logging.getLogger().error(msg)
+
+
+class StreamToLogger(logging.StreamHandler):
 	"""
 	File-like stream object that redirects writes to a logger instance.
 	Use like:
 		with StreamToLogger(logging.getLogger(), logging.DEBUG) as sob:
-			pprint(object, stream=sob)
+			pprint(object, stream = sob)
 	"""
 
 	def __init__(self, level = logging.DEBUG):
