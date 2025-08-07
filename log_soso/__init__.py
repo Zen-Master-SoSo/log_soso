@@ -23,7 +23,7 @@ STDERR to log, and more.
 """
 import os, logging, sys
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 
 sys_stdout = sys.stdout
